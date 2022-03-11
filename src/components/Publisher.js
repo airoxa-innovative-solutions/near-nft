@@ -40,7 +40,7 @@ const sortFunctions = {
     n2f(a.sale_conditions?.near || "0") - n2f(b.sale_conditions?.near || "0"),
 };
 
-export const Gallery = ({
+export const Publisher = ({
   app,
   views,
   update,
@@ -109,16 +109,8 @@ export const Gallery = ({
 
   return (
     <>
-      {tab < 3 && (
+      {
         <center>
-          {tab !== 2 && (
-            <button
-              onClick={() => update("app.filter", filter === 2 ? 1 : 2)}
-              style={{ background: "#fed" }}
-            >
-              {filter === 1 ? "All" : "Sales"}
-            </button>
-          )}
           <button
             onClick={() => update("app.sort", sort === 2 ? 1 : 2)}
             style={{ background: sort === 1 || sort === 2 ? "#fed" : "" }}
@@ -126,121 +118,10 @@ export const Gallery = ({
             Date {sort === 1 && "⬆️"}
             {sort === 2 && "⬇️"}
           </button>
-          {tab !== 2 && (
-            <button
-              onClick={() => update("app.sort", sort === 4 ? 3 : 4)}
-              style={{ background: sort === 3 || sort === 4 ? "#fed" : "" }}
-            >
-              Price {sort === 3 && "⬆️"}
-              {sort === 4 && "⬇️"}
-            </button>
-          )}
         </center>
-      )}
-      {tab === 1 &&
-        market.map(
-          ({
-            metadata: { media },
-            owner_id,
-            token_id,
-            sale_conditions = {},
-            bids = {},
-            royalty = {},
-          }) => (
-            <div key={token_id} className="item">
-              <img
-                src={media}
-                onClick={() =>
-                  history.pushState(
-                    {},
-                    "",
-                    window.location.pathname + "?t=" + token_id
-                  )
-                }
-              />
-              <p>
-                {accountId !== owner_id
-                  ? `Owned by ${formatAccountId(owner_id)}`
-                  : `You own this!`}
-              </p>
-              {Object.keys(sale_conditions).length > 0 && (
-                <>
-                  <h4>Royalties</h4>
-                  {Object.keys(royalty).length > 0 ? (
-                    Object.entries(royalty).map(([receiver, amount]) => (
-                      <div key={receiver}>
-                        {receiver} - {amount / 100}%
-                      </div>
-                    ))
-                  ) : (
-                    <p>This token has no royalties.</p>
-                  )}
-                </>
-              )}
-              {Object.keys(sale_conditions).length > 0 && (
-                <>
-                  <h4>Sale Conditions</h4>
-                  {Object.entries(sale_conditions).map(
-                    ([ft_token_id, price]) => (
-                      <div className="margin-bottom" key={ft_token_id}>
-                        {price === "0" ? "open" : formatNearAmount(price, 4)} -{" "}
-                        {token2symbol[ft_token_id]}
-                      </div>
-                    )
-                  )}
-                  {accountId.length > 0 && accountId !== owner_id && (
-                    <>
-                      <input
-                        type="number"
-                        placeholder="Price"
-                        value={offerPrice}
-                        onChange={(e) => setOfferPrice(e.target.value)}
-                      />
-                      {getTokenOptions(
-                        offerToken,
-                        setOfferToken,
-                        Object.keys(sale_conditions)
-                      )}
-                      <button
-                        onClick={() =>
-                          handleOffer(account, token_id, offerToken, offerPrice)
-                        }
-                      >
-                        Offer
-                      </button>
-                    </>
-                  )}
-                </>
-              )}
-              {Object.keys(bids).length > 0 && (
-                <>
-                  <h4>Offers</h4>
-                  {Object.entries(bids).map(([ft_token_id, ft_token_bids]) =>
-                    ft_token_bids.map(({ owner_id: bid_owner_id, price }) => (
-                      <div className="offers" key={ft_token_id}>
-                        <div>
-                          {price === "0" ? "open" : formatNearAmount(price, 4)}{" "}
-                          - {token2symbol[ft_token_id]} by {bid_owner_id}
-                        </div>
-                        {accountId === owner_id && (
-                          <button
-                            onClick={() =>
-                              handleAcceptOffer(account, token_id, ft_token_id)
-                            }
-                          >
-                            Accept
-                          </button>
-                        )}
-                      </div>
-                    ))
-                  )}
-                </>
-              )}
-            </div>
-          )
-        )}
+      }
 
-      {tab === 2 && (
+      {
         <>
           {!tokens.length && (
             <p className="margin">No NFTs. Try minting something!</p>
@@ -380,7 +261,7 @@ export const Gallery = ({
             )
           )}
         </>
-      )}
+      }
     </>
   );
 };
