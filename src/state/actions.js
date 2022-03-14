@@ -1,7 +1,13 @@
 import BN from "bn.js";
 import { GAS, parseNearAmount, marketId, contractId } from "../state/near";
 
-export const handleMint = async (account, royalties, media, validMedia) => {
+export const handleMint = async (
+  account,
+  royalties,
+  media,
+  validMedia,
+  bannerObj
+) => {
   if (!media.length || !validMedia) {
     alert("Please enter a valid Image Link. You should see a preview below!");
     return;
@@ -21,20 +27,25 @@ export const handleMint = async (account, royalties, media, validMedia) => {
 
   const metadata = {
     media,
+    bannerObj,
     issued_at: parseInt(Date.now().toString()),
   };
   const deposit = parseNearAmount("0.1");
+
+  const tokenId = "token-" + Date.now();
   await account.functionCall(
     contractId,
     "nft_mint",
     {
-      token_id: "token-" + Date.now(),
+      token_id: tokenId,
       metadata,
       perpetual_royalties,
     },
     GAS,
     deposit
   );
+
+  return tokenId;
 };
 
 export const handleAcceptOffer = async (account, token_id, ft_token_id) => {

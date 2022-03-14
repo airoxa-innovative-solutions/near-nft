@@ -53,7 +53,7 @@ export const Publisher = ({
 
   const { tab, sort, filter } = app;
   const { tokens, sales, allTokens, marketStoragePaid } = views;
-
+  console.log(views);
   let accountId = "";
   if (account) accountId = account.accountId;
 
@@ -128,7 +128,7 @@ export const Publisher = ({
           )}
           {tokens.map(
             ({
-              metadata: { media },
+              metadata: { media, bannerData },
               owner_id,
               token_id,
               sale_conditions = {},
@@ -146,7 +146,23 @@ export const Publisher = ({
                     )
                   }
                 />
-                {marketStoragePaid !== "0" ? (
+                <div>{bannerData ? "Banner URL : " + bannerData?.URL : ""}</div>
+                <div>
+                  {bannerData
+                    ? "Banner Size : " +
+                      bannerData?.width +
+                      " x " +
+                      bannerData?.width
+                    : ""}
+                </div>
+                <div>
+                  {bannerData
+                    ? "Banner Subscription charges/10 hits : " +
+                      bannerData?.subscription
+                    : ""}
+                </div>
+
+                {/*marketStoragePaid !== "0" ? (
                   <>
                     <h4>Royalties</h4>
                     {Object.keys(royalty).length > 0 ? (
@@ -256,7 +272,7 @@ export const Publisher = ({
                       Register with Market to Sell
                     </button>
                   </div>
-                )}
+                )*/}
               </div>
             )
           )}
