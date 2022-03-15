@@ -66,6 +66,19 @@ export const Publisher = ({
   const [ft, setFT] = useState("near");
   const [saleConditions, setSaleConditions] = useState({});
 
+  const [bannerWidth, setBannerWidth] = useState("200");
+
+  const [bannerHeight, setBannerHeight] = useState("75");
+  const [bannerSubscription, setBannerSubscription] = useState(0.3);
+  const [embedCode, setEmbedCode] = useState("");
+
+  const token_id = "token-1234567890123456";
+
+  useEffect(() => {
+    const scriptCode = `<script src="http://locify.io/nearadbanner.js" token_id=${token_id}></script>`;
+    setEmbedCode(scriptCode);
+  }, [token_id]);
+
   useEffect(() => {
     if (!loading) {
       dispatch(loadItems(account));
@@ -146,21 +159,50 @@ export const Publisher = ({
                     )
                   }
                 />
-                <div>{bannerData ? "Banner URL : " + bannerData?.URL : ""}</div>
+                <div>
+                  {bannerData
+                    ? "Banner URL : " + bannerData?.URL
+                    : "http://gamer.world/p1"}
+                </div>
                 <div>
                   {bannerData
                     ? "Banner Size : " +
                       bannerData?.width +
                       " x " +
-                      bannerData?.width
-                    : ""}
+                      bannerData?.height
+                    : "Banner Size : " + 200 + " x " + 75}
                 </div>
                 <div>
                   {bannerData
                     ? "Banner Subscription charges/10 hits : " +
                       bannerData?.subscription
-                    : ""}
+                    : "Banner Subscription charges/10 hits : " + 0.3}
                 </div>
+
+                <div className="bannerSizeContainer">
+                  <input
+                    placeholder="Banner Width"
+                    value={bannerWidth}
+                    onChange={(e) => setBannerWidth(e.target.value)}
+                  />
+                  {"   X   "}
+                  <input
+                    placeholder="Banner Height"
+                    value={bannerHeight}
+                    onChange={(e) => setBannerHeight(e.target.value)}
+                  />
+                </div>
+
+                <input
+                  type="number"
+                  min={0.0}
+                  className="full-width"
+                  placeholder="Subscription value/10 hits (Near)"
+                  value={bannerSubscription}
+                  onChange={(e) => setBannerSubscription(e.target.value)}
+                />
+
+                <button>Update</button>
 
                 {/*marketStoragePaid !== "0" ? (
                   <>

@@ -162,7 +162,12 @@ export const MarketPlace = ({
                 ? `Owned by ${formatAccountId(owner_id)}`
                 : `You own this!`}
             </p>
-            {Object.keys(sale_conditions).length > 0 && (
+            <div>Adv. URL : https::\\games.world.p1</div>
+            <div>Banner Width : 200</div>
+            <div>Banner Height: 75</div>
+            <div>Subscription Charges/10 hits : 0.3 near</div>
+            <button>Subscribe</button>
+            {/*Object.keys(sale_conditions).length > 0 && (
               <>
                 <h4>Royalties</h4>
                 {Object.keys(royalty).length > 0 ? (
@@ -175,8 +180,8 @@ export const MarketPlace = ({
                   <p>This token has no royalties.</p>
                 )}
               </>
-            )}
-            {Object.keys(sale_conditions).length > 0 && (
+            )*/}
+            {/*Object.keys(sale_conditions).length > 0 && (
               <>
                 <h4>Sale Conditions</h4>
                 {Object.entries(sale_conditions).map(([ft_token_id, price]) => {
@@ -208,8 +213,8 @@ export const MarketPlace = ({
                       </div>
                     </>
                   );
-                })}
-                {accountId.length > 0 && accountId !== owner_id && (
+                })*/}
+            {/*accountId.length > 0 && accountId !== owner_id && (
                   <>
                     <input
                       type="number"
@@ -232,8 +237,8 @@ export const MarketPlace = ({
                   </>
                 )}
               </>
-            )}
-            {Object.keys(bids).length > 0 && (
+                    )*/}
+            {/*Object.keys(bids).length > 0 && (
               <>
                 <h4>Offers</h4>
                 {Object.entries(bids).map(([ft_token_id, ft_token_bids]) =>
@@ -256,7 +261,7 @@ export const MarketPlace = ({
                   ))
                 )}
               </>
-            )}
+                        )*/}
           </div>
         )
       )}

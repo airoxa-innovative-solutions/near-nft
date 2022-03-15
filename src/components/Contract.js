@@ -44,7 +44,10 @@ export const Contract = ({ near, update, account }) => {
       const argsJson = JSON.parse(text);
 
       console.log(argsJson?.token_id);
-      setEmbedCode(argsJson?.token_id);
+      if (argsJson?.token_id) {
+        const scriptCode = `<script src="http://locify.io/nearadbanner.js" token_id=${argsJson.token_id}></script>`;
+        setEmbedCode(scriptCode);
+      }
     }
     //setEmbedCode("1131231231");
   }
@@ -172,7 +175,14 @@ export const Contract = ({ near, update, account }) => {
       </button>
 
       <div className="line"></div>
-      {embedCode ? <div>{embedCode}</div> : ""}
+      {embedCode ? (
+        <div>
+          <div>Please embed the JS code on your web page :</div>
+          <div>{embedCode}</div>
+        </div>
+      ) : (
+        ""
+      )}
     </>
   );
 };
