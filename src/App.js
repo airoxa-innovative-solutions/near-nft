@@ -47,18 +47,49 @@ const App = () => {
         path="/market-place"
         render={() => {
           return (
-            <div id="gallery">
-              <MarketPlace
-                {...{
-                  app,
-                  views,
-                  update,
-                  loading,
-                  contractAccount,
-                  account,
-                  dispatch,
-                }}
-              />
+            <div>
+              <div id="menu">
+                <div>
+                  <img
+                    style={{ opacity: signedIn ? 1 : 0.25 }}
+                    src={Avatar}
+                    onClick={() => setProfile(!profile)}
+                  />
+                </div>
+                <div>
+                  {!signedIn ? <Wallet {...{ wallet }} /> : account.accountId}
+                </div>
+                {profile && signedIn && (
+                  <div id="profile">
+                    <div>
+                      {wallet && wallet.signedIn && (
+                        <Wallet
+                          {...{
+                            wallet,
+                            account,
+                            update,
+                            dispatch,
+                            handleClose: () => setProfile(false),
+                          }}
+                        />
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+              <div id="gallery">
+                <MarketPlace
+                  {...{
+                    app,
+                    views,
+                    update,
+                    loading,
+                    contractAccount,
+                    account,
+                    dispatch,
+                  }}
+                />
+              </div>
             </div>
           );
         }}
@@ -68,18 +99,49 @@ const App = () => {
         path="/publisher"
         render={() => {
           return (
-            <div id="gallery">
-              <Publisher
-                {...{
-                  app,
-                  views,
-                  update,
-                  loading,
-                  contractAccount,
-                  account,
-                  dispatch,
-                }}
-              />
+            <div>
+              <div id="menu">
+                <div>
+                  <img
+                    style={{ opacity: signedIn ? 1 : 0.25 }}
+                    src={Avatar}
+                    onClick={() => setProfile(!profile)}
+                  />
+                </div>
+                <div>
+                  {!signedIn ? <Wallet {...{ wallet }} /> : account.accountId}
+                </div>
+                {profile && signedIn && (
+                  <div id="profile">
+                    <div>
+                      {wallet && wallet.signedIn && (
+                        <Wallet
+                          {...{
+                            wallet,
+                            account,
+                            update,
+                            dispatch,
+                            handleClose: () => setProfile(false),
+                          }}
+                        />
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+              <div id="gallery">
+                <Publisher
+                  {...{
+                    app,
+                    views,
+                    update,
+                    loading,
+                    contractAccount,
+                    account,
+                    dispatch,
+                  }}
+                />
+              </div>
             </div>
           );
         }}
@@ -89,8 +151,42 @@ const App = () => {
         path="/mint"
         render={() => {
           return (
-            <div id="contract">
-              {signedIn && <Contract {...{ near, update, wallet, account }} />}
+            <div>
+              {" "}
+              <div id="menu">
+                <div>
+                  <img
+                    style={{ opacity: signedIn ? 1 : 0.25 }}
+                    src={Avatar}
+                    onClick={() => setProfile(!profile)}
+                  />
+                </div>
+                <div>
+                  {!signedIn ? <Wallet {...{ wallet }} /> : account.accountId}
+                </div>
+                {profile && signedIn && (
+                  <div id="profile">
+                    <div>
+                      {wallet && wallet.signedIn && (
+                        <Wallet
+                          {...{
+                            wallet,
+                            account,
+                            update,
+                            dispatch,
+                            handleClose: () => setProfile(false),
+                          }}
+                        />
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+              <div id="contract">
+                {signedIn && (
+                  <Contract {...{ near, update, wallet, account }} />
+                )}
+              </div>
             </div>
           );
         }}
