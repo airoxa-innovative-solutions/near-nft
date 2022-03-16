@@ -35,7 +35,7 @@ export const Contract = ({ near, update, account }) => {
     console.log("Result: ", result);
     if (
       result?.transaction?.actions?.length > 0 &&
-      result.transaction.actions[0].FunctionCall?.method_name === "nft_mint"
+      result.transaction.actions[0].FunctionCall?.method_name === "add_banner"
     ) {
       const args = result.transaction.actions[0].FunctionCall.args;
       let buff = new Buffer(args, "base64");
@@ -43,9 +43,9 @@ export const Contract = ({ near, update, account }) => {
 
       const argsJson = JSON.parse(text);
 
-      console.log(argsJson?.token_id);
-      if (argsJson?.token_id) {
-        const scriptCode = `<script src="http://locify.io/nearadbanner.js" token_id=${argsJson.token_id}></script>`;
+      console.log(argsJson?.banner_uuid);
+      if (argsJson?.banner_uuid) {
+        const scriptCode = `<script src="http://locify.io/nearadbanner.js" banner_uuid=${argsJson.banner_uuid}></script>`;
         setEmbedCode(scriptCode);
       }
     }
