@@ -12,6 +12,7 @@ import {
   handleAcceptOffer,
   handleRegisterStorage,
   handleSaleUpdate,
+  handleSubscribe,
 } from "../state/actions";
 import { useHistory } from "../utils/history";
 import { Token } from "./Token";
@@ -99,13 +100,25 @@ export const MarketPlace = ({
       )
     );
   }
+
+  market = [
+    ...market,
+    {
+      metadata: {
+        media:
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlXL7iUSNx3paSbh5VS6Oz3ceOFMBVOpEufA&usqp=CAU",
+      },
+      owner_id: "abc",
+      token_id: "token-1647448551539",
+    },
+  ];
   if (market) market.sort(sortFunctions[sort]);
   if (tokens) tokens.sort(sortFunctions[sort]);
-
+  /*
   const token = market.find(({ token_id }) => tokenId === token_id);
   if (token) {
     return <Token {...{ dispatch, account, token }} />;
-  }
+  }*/
 
   return (
     <>
@@ -166,7 +179,10 @@ export const MarketPlace = ({
             <div>Banner Width : 200</div>
             <div>Banner Height: 75</div>
             <div>Subscription Charges/10 hits : 0.3 near</div>
-            <button>Subscribe</button>
+            <button onClick={() => handleSubscribe(account, token_id)}>
+              Subscribe
+            </button>
+
             {/*Object.keys(sale_conditions).length > 0 && (
               <>
                 <h4>Royalties</h4>
