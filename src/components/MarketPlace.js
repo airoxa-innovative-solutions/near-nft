@@ -99,8 +99,8 @@ export const MarketPlace = ({
       )
     );
   }
-  market.sort(sortFunctions[sort]);
-  tokens.sort(sortFunctions[sort]);
+  if (market) market.sort(sortFunctions[sort]);
+  if (tokens) tokens.sort(sortFunctions[sort]);
 
   const token = market.find(({ token_id }) => tokenId === token_id);
   if (token) {

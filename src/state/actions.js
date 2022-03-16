@@ -33,7 +33,22 @@ export const handleMint = async (
   const deposit = parseNearAmount("0.1");
 
   const tokenId = "token-" + Date.now();
+
   await account.functionCall(
+    contractId,
+    "add_banner",
+    {
+      banner_uuid: tokenId,
+      banner_page_url: bannerObj.URL,
+      banner_width: bannerObj.width,
+      banner_height: bannerObj.height,
+      banner_subscription_charge: bannerObj.subscription,
+    },
+    GAS
+    // deposit
+  );
+
+  /*await account.functionCall(
     contractId,
     "nft_mint",
     {
@@ -43,7 +58,7 @@ export const handleMint = async (
     },
     GAS,
     deposit
-  );
+  );*/
 
   return tokenId;
 };
