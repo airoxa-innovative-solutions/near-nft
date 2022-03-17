@@ -55,6 +55,11 @@ export const MarketPlace = ({
   const { tab, sort, filter } = app;
   const { tokens, sales, allTokens, marketStoragePaid } = views;
 
+  console.log("tokens:", tokens);
+
+  console.log("sales:", sales);
+  console.log("allTokens:", allTokens);
+
   let accountId = "";
   if (account) accountId = account.accountId;
 
@@ -91,8 +96,9 @@ export const MarketPlace = ({
       account?.accountId === owner_id &&
       Object.keys(sale_conditions || {}).length > 0
   );
-
+  /*
   let market = sales;
+
   if (tab !== 2 && filter === 1) {
     market = market.concat(
       allTokens.filter(
@@ -111,9 +117,11 @@ export const MarketPlace = ({
       owner_id: "abc",
       token_id: "token-1647448551539",
     },
-  ];
-  if (market) market.sort(sortFunctions[sort]);
-  if (tokens) tokens.sort(sortFunctions[sort]);
+  ];*/
+
+  let market = tokens;
+  // if (market) market.sort(sortFunctions[sort]);
+  // if (tokens) tokens.sort(sortFunctions[sort]);
   /*
   const token = market.find(({ token_id }) => tokenId === token_id);
   if (token) {
@@ -152,12 +160,17 @@ export const MarketPlace = ({
       }
       {market.map(
         ({
-          metadata: { media },
+          // metadata: { media },
+          media = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlXL7iUSNx3paSbh5VS6Oz3ceOFMBVOpEufA&usqp=CAU",
           owner_id,
           token_id,
           sale_conditions = {},
           bids = {},
           royalty = {},
+          banner_subscription_charge,
+          banner_page_url,
+          banner_height,
+          banner_width,
         }) => (
           <div key={token_id} className="item">
             <img
@@ -170,15 +183,18 @@ export const MarketPlace = ({
                 )
               }
             />
-            <p>
+            {/*    <p>
               {accountId !== owner_id
                 ? `Owned by ${formatAccountId(owner_id)}`
                 : `You own this!`}
             </p>
-            <div>Adv. URL : https::\\games.world.p1</div>
-            <div>Banner Width : 200</div>
-            <div>Banner Height: 75</div>
-            <div>Subscription Charges/10 hits : 0.3 near</div>
+              */}
+            <div>Adv. URL : {banner_page_url}</div>
+            <div>Banner Width : {banner_width}</div>
+            <div>Banner Height: {banner_height}</div>
+            <div>
+              Subscription Charges/10 hits : {banner_subscription_charge} near
+            </div>
             <button onClick={() => handleSubscribe(account, token_id)}>
               Subscribe
             </button>

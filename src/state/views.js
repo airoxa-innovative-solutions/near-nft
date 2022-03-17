@@ -34,11 +34,21 @@ export const loadItems =
     let tokens = [];
     if (account) {
       const { accountId } = account;
+      console.log("all_banner.... is init.. on:", contractId);
       tokens = await contractAccount.viewFunction(contractId, "all_banner", {
         account_id: account.accountId,
         from_index: "0",
         limit: 50,
       });
+
+      //tokens = await contractAccount.all_banner();
+      console.log("all_banner.... was called ");
+
+      //  tokens = "[" + tokens.replace(/}\r/g, "},") + "]";
+      //console.log(tokens);
+
+      tokens = JSON.parse("[" + tokens.replace(/}{/g, "},{") + "]");
+      //     tokens = JSON.parse(tokens);
 
       console.log("tokens:", tokens);
       const sales = []; /* await contractAccount.viewFunction(
@@ -65,6 +75,7 @@ export const loadItems =
         tokens[i] = Object.assign(tokens[i], sale || {});
       }
     }
+    console.log("test pt 1:");
 
     /// all sales
     // need to use NFT helper for deployed contract
@@ -103,6 +114,7 @@ export const loadItems =
       );*/
     }
 
+    console.log("test pt 2:");
     /* const saleTokens = await contractAccount.viewFunction(
       contractId,
       "nft_tokens_batch",
@@ -161,10 +173,13 @@ export const loadItems =
         limit: 50,
       });*/
     }
+    console.log("test pt 11:");
 
     allTokens = allTokens.filter(
       ({ owner_id }) => !BAD_OWNER_ID.includes(owner_id)
     );
+
+    console.log("udpate t,s, at", tokens, sales, allTokens);
 
     update("views", { tokens, sales, allTokens });
     return { tokens, sales, allTokens };

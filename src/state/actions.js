@@ -66,7 +66,7 @@ export const handleMint = async (
 export const handleSubscribe = async (account, tokenId) => {
   const adv_id = "adv-" + tokenId;
 
-  const deposit = parseNearAmount("100000000000000000000000000");
+  const deposit = parseNearAmount("10");
   await account.functionCall(
     contractId,
     "add_adv",
