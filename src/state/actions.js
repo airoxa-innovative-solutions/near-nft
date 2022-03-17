@@ -30,7 +30,7 @@ export const handleMint = async (
     bannerObj,
     issued_at: parseInt(Date.now().toString()),
   };
-  const deposit = parseNearAmount("0.1");
+  const deposit = parseNearAmount("10_000_000_000_000_000_000_000_000");
 
   const tokenId = "token-" + Date.now();
 
@@ -42,7 +42,7 @@ export const handleMint = async (
       banner_page_url: bannerObj.URL,
       banner_width: bannerObj.width,
       banner_height: bannerObj.height,
-      banner_subscription_charge: bannerObj.subscription,
+      banner_subscription_charge: bannerObj.subscription.toString(),
     },
     GAS
     // deposit
@@ -61,6 +61,25 @@ export const handleMint = async (
   );*/
 
   return tokenId;
+};
+
+export const handleSubscribe = async (account, tokenId) => {
+  const adv_id = "adv-" + tokenId;
+
+  const deposit = parseNearAmount("10");
+  await account.functionCall(
+    contractId,
+    "add_adv",
+    {
+      adv_id: adv_id,
+      banner_uuid: tokenId,
+      adv_image_url:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlXL7iUSNx3paSbh5VS6Oz3ceOFMBVOpEufA&usqp=CAU",
+      adv_forwarding_url: "https://google.com/",
+    },
+    GAS,
+    deposit
+  );
 };
 
 export const handleAcceptOffer = async (account, token_id, ft_token_id) => {

@@ -33,7 +33,13 @@ module.exports = function getConfig() {
           "nft_remove_sale_guest",
           "upgrade_guest",
         ],
-        viewMethods: ["get_guest", "get_token_ids", "nft_token", "get_sale"],
+        viewMethods: [
+          "get_guest",
+          "get_token_ids",
+          "nft_token",
+          "get_sale",
+          "all_banner",
+        ],
       },
       marketDeposit: "100000000000000000000000",
       //"market." +
