@@ -63,19 +63,26 @@ export const handleMint = async (
   return tokenId;
 };
 
-export const handleSubscribe = async (account, tokenId) => {
-  const adv_id = "adv-" + tokenId;
-
-  const deposit = parseNearAmount("10");
+export const handleSubscribe = async (
+  account,
+  bannerUuid,
+  advImageUrl,
+  advForwardingUrl,
+  subscriptionCharge
+) => {
+  const adv_id = "adv-" + bannerUuid;
+  const deposit = parseNearAmount(subscriptionCharge);
   await account.functionCall(
     contractId,
     "add_adv",
     {
       adv_id: adv_id,
-      banner_uuid: tokenId,
-      adv_image_url:
+      banner_uuid: bannerUuid,
+      /* adv_image_url:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlXL7iUSNx3paSbh5VS6Oz3ceOFMBVOpEufA&usqp=CAU",
-      adv_forwarding_url: "https://google.com/",
+      adv_forwarding_url: "https://google.com/", */
+      adv_image_url: advImageUrl,
+      adv_forwarding_url: advForwardingUrl,
     },
     GAS,
     deposit

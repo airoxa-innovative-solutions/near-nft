@@ -17,6 +17,8 @@ import {
 import { useHistory } from "../utils/history";
 import { Token } from "./Token";
 
+import { SubscribeBanner } from "./SubscribeBanner";
+
 const PATH_SPLIT = "?t=";
 const SUB_SPLIT = "&=";
 
@@ -171,15 +173,16 @@ export const MarketPlace = ({
           banner_page_url,
           banner_height,
           banner_width,
+          banner_uuid,
         }) => (
-          <div key={token_id} className="item">
+          <div key={banner_uuid} className="item">
             <img
               src={media}
               onClick={() =>
                 history.pushState(
                   {},
                   "",
-                  window.location.pathname + "?t=" + token_id
+                  window.location.pathname + "?t=" + banner_uuid
                 )
               }
             />
@@ -195,9 +198,12 @@ export const MarketPlace = ({
             <div>
               Subscription Charges/10 hits : {banner_subscription_charge} near
             </div>
-            <button onClick={() => handleSubscribe(account, token_id)}>
+            {/* <button onClick={() => handleSubscribe(account, token_id)}>
               Subscribe
-            </button>
+            </button> */}
+            <SubscribeBanner
+              {...{ account, banner_uuid, banner_subscription_charge }}
+            />
 
             {/*Object.keys(sale_conditions).length > 0 && (
               <>
