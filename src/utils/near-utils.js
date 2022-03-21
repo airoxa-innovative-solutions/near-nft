@@ -160,9 +160,11 @@ export const getContractSigner = async ({ keyPair }) => {
   });
   const account = new nearAPI.Account(near.connection, contractName);
   const contract = await new nearAPI.Contract(account, contractName, {
-    changeMethods: ["send", "claim", "create_account_and_claim"],
+    changeMethods: [], //["send", "claim", "create_account_and_claim"],
     viewMethods: ["all_banner"],
-    sender: account,
+    //  sender: account,
   });
+
+  console.log("contract:", contract);
   return { contract };
 };

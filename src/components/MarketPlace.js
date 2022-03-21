@@ -163,7 +163,7 @@ export const MarketPlace = ({
       {market.map(
         ({
           // metadata: { media },
-          media = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlXL7iUSNx3paSbh5VS6Oz3ceOFMBVOpEufA&usqp=CAU",
+          media_url,
           owner_id,
           token_id,
           sale_conditions = {},
@@ -177,7 +177,7 @@ export const MarketPlace = ({
         }) => (
           <div key={banner_uuid} className="item">
             <img
-              src={media}
+              src={media_url}
               onClick={() =>
                 history.pushState(
                   {},

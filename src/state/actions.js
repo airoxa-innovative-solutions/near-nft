@@ -39,6 +39,7 @@ export const handleMint = async (
     "add_banner",
     {
       banner_uuid: tokenId,
+      media_url: media,
       banner_page_url: bannerObj.URL,
       banner_width: bannerObj.width,
       banner_height: bannerObj.height,
@@ -70,13 +71,13 @@ export const handleSubscribe = async (
   advForwardingUrl,
   subscriptionCharge
 ) => {
-  const adv_id = "adv-" + bannerUuid;
+  const adv_uuid = "adv-" + bannerUuid;
   const deposit = parseNearAmount(subscriptionCharge);
   await account.functionCall(
     contractId,
     "add_adv",
     {
-      adv_id: adv_id,
+      adv_uuid: adv_uuid,
       banner_uuid: bannerUuid,
       /* adv_image_url:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlXL7iUSNx3paSbh5VS6Oz3ceOFMBVOpEufA&usqp=CAU",

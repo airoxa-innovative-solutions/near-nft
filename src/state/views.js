@@ -1,4 +1,8 @@
 import { marketId, contractId } from "../state/near";
+const nearAPI = require("near-api-js");
+
+const { keyStores } = nearAPI;
+import { getContractSigner } from "../utils/near-utils";
 
 const BAD_OWNER_ID = [];
 // api-helper config
@@ -40,8 +44,13 @@ export const loadItems =
         from_index: "0",
         limit: 50,
       });
+      console.log("raw tokens string...:", tokens);
 
-      //tokens = await contractAccount.all_banner();
+      const keyStore = new keyStores.BrowserLocalStorageKeyStore();
+      const { contract } = await getContractSigner({ keyPair: keyStore });
+
+      tokens = await contract.all_banner();
+      console.log("raw tokens string from contractSigner ...:", tokens);
       console.log("all_banner.... was called ");
 
       //  tokens = "[" + tokens.replace(/}\r/g, "},") + "]";

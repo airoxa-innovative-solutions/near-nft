@@ -45,7 +45,8 @@ export const Contract = ({ near, update, account }) => {
 
       console.log(argsJson?.banner_uuid);
       if (argsJson?.banner_uuid) {
-        const scriptCode = `<script src="http://locify.io/nearadbanner.js" banner_uuid=${argsJson.banner_uuid}></script>`;
+        const full = location.protocol + "//" + location.host;
+        const scriptCode = `<script src="${full}/embed.js" banner_uuid=${argsJson.banner_uuid}></script>`;
         setEmbedCode(scriptCode);
       }
     }
@@ -67,6 +68,31 @@ export const Contract = ({ near, update, account }) => {
     // const tokenId =
     handleMint(account, royalties, media, validMedia, bannerObj);
     //  setEmbedCode(tokenId);
+  };
+
+  const CopyToClipboard1 = (containerid) => {
+    if (document.selection) {
+      var range = document.body.createTextRange();
+      range.moveToElementText(document.getElementById(containerid));
+      range.select().createTextRange();
+      document.execCommand("copy");
+    } else if (window.getSelection) {
+      var range = document.createRange();
+      range.selectNode(document.getElementById(containerid));
+      window.getSelection().addRange(range);
+      document.execCommand("copy");
+      alert("Embed Code has been copied.");
+    }
+  };
+
+  const CopyToClipboard = (containerid) => {
+    var range = document.createRange();
+    range.selectNode(containerid); //changed here
+    window.getSelection().removeAllRanges();
+    window.getSelection().addRange(range);
+    document.execCommand("copy");
+    window.getSelection().removeAllRanges();
+    alert("data copied");
   };
 
   return (
@@ -178,7 +204,17 @@ export const Contract = ({ near, update, account }) => {
       {embedCode ? (
         <div>
           <div>Please embed the JS code on your web page :</div>
-          <div>{embedCode}</div>
+          <div>
+            <div id="embedCode">{embedCode}</div>
+            <button
+              id="button1"
+              onClick={() => navigator.clipboard.writeText(`${embedCode}`)}
+            >
+              Click to copy
+            </button>
+          </div>
+          <br />
+          <br />
         </div>
       ) : (
         ""
