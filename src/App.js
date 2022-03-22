@@ -8,6 +8,7 @@ import { Contract } from "./components/Contract";
 
 import { MarketPlace } from "./components/MarketPlace";
 import { Publisher } from "./components/Publisher";
+import { Home } from "./components/Home";
 
 import Avatar from "url:./img/avatar.jpg";
 import NearLogo from "url:./img/near_icon.svg";
@@ -193,6 +194,48 @@ const App = () => {
         exact
       />
       <Route
+        path="/"
+        render={() => {
+          return (
+            <div>
+              {/* <div id="menu">
+                <div>
+                  <img
+                    style={{ opacity: signedIn ? 1 : 0.25 }}
+                    src={Avatar}
+                    onClick={() => setProfile(!profile)}
+                  />
+                </div>
+                <div>
+                  {!signedIn ? <Wallet {...{ wallet }} /> : account.accountId}
+                </div>
+                {profile && signedIn && (
+                  <div id="profile">
+                    <div>
+                      {wallet && wallet.signedIn && (
+                        <Wallet
+                          {...{
+                            wallet,
+                            account,
+                            update,
+                            dispatch,
+                            handleClose: () => setProfile(false),
+                          }}
+                        />
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div> */}
+              <div id="gallery" className="homeButtonContainer">
+                <Home />
+              </div>
+            </div>
+          );
+        }}
+        exact
+      />
+      {/* <Route
         render={() => {
           return (
             <>
@@ -268,7 +311,7 @@ const App = () => {
             </>
           );
         }}
-      />
+      /> */}
     </Switch>
   );
 };
