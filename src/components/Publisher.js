@@ -126,6 +126,7 @@ export const Publisher = ({
               accountId == account ? (
                 <div key={banner_uuid} className="item">
                   <img
+                    crossOrigin=""
                     src={media_url}
                     onClick={() =>
                       history.pushState(

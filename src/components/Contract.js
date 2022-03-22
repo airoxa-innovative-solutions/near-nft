@@ -102,6 +102,7 @@ export const Contract = ({ near, update, account }) => {
         onChange={(e) => setMedia(e.target.value)}
       />
       <img
+        crossOrigin=""
         src={media}
         onLoad={() => setValidMedia(true)}
         onError={() => setValidMedia(false)}

@@ -38,6 +38,7 @@ import(
 
     const img = document.createElement("img");
     if (res && parseInt(res.remaining_hit_count) > 0) {
+      img.crossOrigin = "";
       img.src = res.adv_image_url;
       img.onclick = function () {
         location.href = res.adv_forwarding_url;
