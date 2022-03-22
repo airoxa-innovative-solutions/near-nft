@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import * as nearAPI from "near-api-js";
 import { handleMint } from "../state/actions";
-import { isAccountTaken, networkId } from "../utils/near-utils";
+
 import { useParams, useLocation } from "react-router-dom";
 
 const { KeyPair } = nearAPI;
@@ -11,9 +11,6 @@ export const Contract = ({ near, update, account }) => {
 
   const [media, setMedia] = useState("");
   const [validMedia, setValidMedia] = useState("");
-  const [royalties, setRoyalties] = useState({});
-  const [royalty, setRoyalty] = useState([]);
-  //const [receiver, setReceiver] = useState([]);
   const [bannerPageURL, setBannerPageURL] = useState("");
   const [bannerWidth, setBannerWidth] = useState("");
 
@@ -45,7 +42,8 @@ export const Contract = ({ near, update, account }) => {
 
       console.log(argsJson?.banner_uuid);
       if (argsJson?.banner_uuid) {
-        const scriptCode = `<script src="http://locify.io/nearadbanner.js" banner_uuid=${argsJson.banner_uuid}></script>`;
+        const full = location.protocol + "//" + location.host;
+        const scriptCode = `<script src="${full}/embed.js" banner_uuid=${argsJson.banner_uuid}></script>`;
         setEmbedCode(scriptCode);
       }
     }
@@ -56,7 +54,7 @@ export const Contract = ({ near, update, account }) => {
   const ACCOUNT_ID = account.accountId;
   if (transactionHashes) getState(transactionHashes, ACCOUNT_ID);
 
-  const handleMintClick = async (account, royalties, media, validMedia) => {
+  const handleMintClick = async (account, media, validMedia) => {
     const bannerObj = {
       URL: bannerPageURL,
       width: bannerWidth,
@@ -65,8 +63,33 @@ export const Contract = ({ near, update, account }) => {
     };
 
     // const tokenId =
-    handleMint(account, royalties, media, validMedia, bannerObj);
+    handleMint(account, media, validMedia, bannerObj);
     //  setEmbedCode(tokenId);
+  };
+
+  const CopyToClipboard1 = (containerid) => {
+    if (document.selection) {
+      var range = document.body.createTextRange();
+      range.moveToElementText(document.getElementById(containerid));
+      range.select().createTextRange();
+      document.execCommand("copy");
+    } else if (window.getSelection) {
+      var range = document.createRange();
+      range.selectNode(document.getElementById(containerid));
+      window.getSelection().addRange(range);
+      document.execCommand("copy");
+      alert("Embed Code has been copied.");
+    }
+  };
+
+  const CopyToClipboard = (containerid) => {
+    var range = document.createRange();
+    range.selectNode(containerid); //changed here
+    window.getSelection().removeAllRanges();
+    window.getSelection().addRange(range);
+    document.execCommand("copy");
+    window.getSelection().removeAllRanges();
+    alert("data copied");
   };
 
   return (
@@ -79,6 +102,7 @@ export const Contract = ({ near, update, account }) => {
         onChange={(e) => setMedia(e.target.value)}
       />
       <img
+        crossOrigin=""
         src={media}
         onLoad={() => setValidMedia(true)}
         onError={() => setValidMedia(false)}
@@ -115,62 +139,10 @@ export const Contract = ({ near, update, account }) => {
         value={bannerSubscription}
         onChange={(e) => setBannerSubscription(e.target.value)}
       />
-      {/*
-      <h4>Royalties</h4>
-      {Object.keys(royalties).length > 0 ? (
-        Object.entries(royalties).map(([receiver, royalty]) => (
-          <div key={receiver}>
-            {receiver} - {royalty} %{" "}
-            <button
-              onClick={() => {
-                delete royalties[receiver];
-                setRoyalties(Object.assign({}, royalties));
-              }}
-            >
-              ❌
-            </button>
-          </div>
-        ))
-      ) : (
-        <p>No royalties added yet.</p>
-      )}
-      <input
-        className="full-width"
-        placeholder="Account ID"
-        value={receiver}
-        onChange={(e) => setReceiver(e.target.value)}
-      />
-      <input
-        type="number"
-        className="full-width"
-        placeholder="Percentage"
-        value={royalty}
-        onChange={(e) => setRoyalty(e.target.value)}
-      />
-      <button
-        onClick={async () => {
-          const exists = await isAccountTaken(receiver);
-          if (!exists)
-            return alert(
-              `Account: ${receiver} does not exist on ${
-                networkId === "default" ? "testnet" : "mainnet"
-              }.`
-            );
-          setRoyalties(
-            Object.assign({}, royalties, {
-              [receiver]: royalty,
-            })
-          );
-        }}
-      >
-        Add Royalty
-      </button>
-*/}
+
       <div className="line"></div>
 
-      <button
-        onClick={() => handleMintClick(account, royalties, media, validMedia)}
-      >
+      <button onClick={() => handleMintClick(account, media, validMedia)}>
         Mint Banner
       </button>
 
@@ -178,7 +150,17 @@ export const Contract = ({ near, update, account }) => {
       {embedCode ? (
         <div>
           <div>Please embed the JS code on your web page :</div>
-          <div>{embedCode}</div>
+          <div>
+            <div id="embedCode">{embedCode}</div>
+            <button
+              id="button1"
+              onClick={() => navigator.clipboard.writeText(`${embedCode}`)}
+            >
+              Click to copy
+            </button>
+          </div>
+          <br />
+          <br />
         </div>
       ) : (
         ""

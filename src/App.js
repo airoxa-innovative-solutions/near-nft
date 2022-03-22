@@ -5,7 +5,7 @@ import { appStore, onAppMount } from "./state/app";
 
 import { Wallet } from "./components/Wallet";
 import { Contract } from "./components/Contract";
-import { Gallery } from "./components/Gallery";
+
 import { MarketPlace } from "./components/MarketPlace";
 import { Publisher } from "./components/Publisher";
 
@@ -265,19 +265,6 @@ const App = () => {
                   )}
                 </div>
               )}
-              <div id="gallery">
-                <Gallery
-                  {...{
-                    app,
-                    views,
-                    update,
-                    loading,
-                    contractAccount,
-                    account,
-                    dispatch,
-                  }}
-                />
-              </div>
             </>
           );
         }}

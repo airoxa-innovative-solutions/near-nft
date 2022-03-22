@@ -26,7 +26,7 @@ export const near = new Near({
 
 // alias
 export const contractId = contractName;
-export const marketId = /*'market.' + */ contractName;
+export const marketId = contractName;
 
 export const setSignerFromSeed = async (accountId, seedPhrase) => {
   const { secretKey } = parseSeedPhrase(seedPhrase);
@@ -112,10 +112,6 @@ export const createAccessKeyAccount = (near, key) => {
   return account;
 };
 
-/********************************
-Not used
-********************************/
-
 export const hasKey = async (near, accountId, publicKey) => {
   const pubKeyStr = publicKey.toString();
   const account = new nearAPI.Account(near.connection, accountId);
@@ -160,9 +156,11 @@ export const getContractSigner = async ({ keyPair }) => {
   });
   const account = new nearAPI.Account(near.connection, contractName);
   const contract = await new nearAPI.Contract(account, contractName, {
-    changeMethods: ["send", "claim", "create_account_and_claim"],
+    changeMethods: [], //["send", "claim", "create_account_and_claim"],
     viewMethods: ["all_banner"],
-    sender: account,
+    //  sender: account,
   });
+
+  console.log("contract:", contract);
   return { contract };
 };
