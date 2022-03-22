@@ -1,12 +1,3 @@
-/* "use strict";
- */
-
-/**
- * References:
- * https://docs.near.org/docs/api/naj-quick-reference
- * https://docs.near.org/docs/develop/front-end/introduction#client-side
- */
-
 var curScriptElement = document.currentScript;
 import(
   "https://cdn.jsdelivr.net/npm/near-api-js@0.44.2/dist/near-api-js.js"

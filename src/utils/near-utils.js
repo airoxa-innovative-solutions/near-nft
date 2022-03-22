@@ -26,7 +26,7 @@ export const near = new Near({
 
 // alias
 export const contractId = contractName;
-export const marketId = /*'market.' + */ contractName;
+export const marketId = contractName;
 
 export const setSignerFromSeed = async (accountId, seedPhrase) => {
   const { secretKey } = parseSeedPhrase(seedPhrase);
@@ -111,10 +111,6 @@ export const createAccessKeyAccount = (near, key) => {
   const account = new Account(near.connection, contractName);
   return account;
 };
-
-/********************************
-Not used
-********************************/
 
 export const hasKey = async (near, accountId, publicKey) => {
   const pubKeyStr = publicKey.toString();

@@ -3,7 +3,7 @@ import { GAS, parseNearAmount, marketId, contractId } from "../state/near";
 
 export const handleMint = async (
   account,
-  royalties,
+
   media,
   validMedia,
   bannerObj
@@ -12,25 +12,6 @@ export const handleMint = async (
     alert("Please enter a valid Image Link. You should see a preview below!");
     return;
   }
-
-  // shape royalties data for minting and check max is < 20%
-  let perpetual_royalties = Object.entries(royalties)
-    .map(([receiver, royalty]) => ({
-      [receiver]: royalty * 100,
-    }))
-    .reduce((acc, cur) => Object.assign(acc, cur), {});
-  if (Object.values(perpetual_royalties).reduce((a, c) => a + c, 0) > 2000) {
-    return alert(
-      "Cannot add more than 20% in perpetual NFT royalties when minting"
-    );
-  }
-
-  const metadata = {
-    media,
-    bannerObj,
-    issued_at: parseInt(Date.now().toString()),
-  };
-  const deposit = parseNearAmount("10_000_000_000_000_000_000_000_000");
 
   const tokenId = "token-" + Date.now();
 
@@ -48,18 +29,6 @@ export const handleMint = async (
     GAS
     // deposit
   );
-
-  /*await account.functionCall(
-    contractId,
-    "nft_mint",
-    {
-      token_id: tokenId,
-      metadata,
-      perpetual_royalties,
-    },
-    GAS,
-    deposit
-  );*/
 
   return tokenId;
 };
@@ -79,9 +48,6 @@ export const handleSubscribe = async (
     {
       adv_uuid: adv_uuid,
       banner_uuid: bannerUuid,
-      /* adv_image_url:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlXL7iUSNx3paSbh5VS6Oz3ceOFMBVOpEufA&usqp=CAU",
-      adv_forwarding_url: "https://google.com/", */
       adv_image_url: advImageUrl,
       adv_forwarding_url: advForwardingUrl,
     },

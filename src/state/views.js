@@ -19,14 +19,6 @@ export const getMarketStoragePaid =
   async ({ update, getState }) => {
     if (!account) return;
     const { contractAccount } = getState();
-
-    /*    update("views", {
-      marketStoragePaid: await contractAccount.viewFunction(
-        marketId,
-        "storage_paid",
-        { account_id: account.accountId }
-      ),
-    });*/
   };
 
 export const loadItems =
@@ -60,15 +52,8 @@ export const loadItems =
       //     tokens = JSON.parse(tokens);
 
       console.log("tokens:", tokens);
-      const sales = []; /* await contractAccount.viewFunction(
-        marketId,
-        "get_sales_by_owner_id",
-        {
-          account_id: account.accountId,
-          from_index: "0",
-          limit: 50,
-        }
-      );*/
+      const sales = [];
+
       // merge tokens with sale data if it's on sale
       for (let i = 0; i < tokens.length; i++) {
         const { token_id } = tokens[i];
@@ -112,41 +97,10 @@ export const loadItems =
         ]);
       sales = (await fetch(salesUrl, { headers }).then((res) => res.json()))[0];
     } else {
-      /* sales = await contractAccount.viewFunction(
-        marketId,
-        "get_sales_by_nft_contract_id",
-        {
-          nft_contract_id: contractId,
-          from_index: "0",
-          limit: 50,
-        }
-      );*/
     }
 
     console.log("test pt 2:");
-    /* const saleTokens = await contractAccount.viewFunction(
-      contractId,
-      "nft_tokens_batch",
-      {
-        token_ids: sales
-          .filter(({ nft_contract_id }) => nft_contract_id === contractId)
-          .map(({ token_id }) => token_id),
-      }
-    );*/
-    // merge sale listing with nft token data
-    /*  for (let i = 0; i < sales.length; i++) {
-      const { token_id } = sales[i];
-      let token = saleTokens.find(({ token_id: t }) => t === token_id);
-      // don't have it in batch, go find token data
-      if (!token) {
-        token = await contractAccount.viewFunction(contractId, "nft_token", {
-          token_id,
-        });
-      }
-      sales[i] = Object.assign(sales[i], token);
-    }
-    sales = sales.filter(({ owner_id }) => !BAD_OWNER_ID.includes(owner_id));
-*/
+
     // all tokens
     // need to use NFT helper for deployed
     let allTokens = [];
@@ -176,13 +130,7 @@ export const loadItems =
       allTokens = (
         await fetch(allTokensUrl, { headers }).then((res) => res.json())
       )[0];
-    } else {
-      /*   allTokens = await contractAccount.viewFunction(contractId, "nft_tokens", {
-        from_index: "0",
-        limit: 50,
-      });*/
     }
-    console.log("test pt 11:");
 
     allTokens = allTokens.filter(
       ({ owner_id }) => !BAD_OWNER_ID.includes(owner_id)
