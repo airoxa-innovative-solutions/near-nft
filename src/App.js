@@ -41,6 +41,44 @@ const App = () => {
   if (profile && !signedIn) {
     setProfile(false);
   }
+  const Header = () => {
+    return (
+      <div id="menu">
+        {/*   <div>
+          <img
+            style={{ opacity: signedIn ? 1 : 0.25 }}
+            src={Avatar}
+            onClick={() => setProfile(!profile)}
+          />
+        </div> */}
+        <div>{!signedIn ? <Wallet {...{ wallet }} /> : account.accountId}</div>
+        {profile && signedIn && (
+          <>
+            <div id="profile">
+              <div>
+                {wallet && wallet.signedIn && (
+                  <Wallet
+                    {...{
+                      wallet,
+                      account,
+                      update,
+                      dispatch,
+                      handleClose: () => setProfile(false),
+                    }}
+                  />
+                )}
+              </div>
+            </div>
+            <img
+              style={{ opacity: signedIn ? 1 : 0.25 }}
+              src={Avatar}
+              onClick={() => setProfile(!profile)}
+            />
+          </>
+        )}
+      </div>
+    );
+  };
 
   return (
     <Switch>
@@ -49,35 +87,7 @@ const App = () => {
         render={() => {
           return (
             <div>
-              <div id="menu">
-                <div>
-                  <img
-                    style={{ opacity: signedIn ? 1 : 0.25 }}
-                    src={Avatar}
-                    onClick={() => setProfile(!profile)}
-                  />
-                </div>
-                <div>
-                  {!signedIn ? <Wallet {...{ wallet }} /> : account.accountId}
-                </div>
-                {profile && signedIn && (
-                  <div id="profile">
-                    <div>
-                      {wallet && wallet.signedIn && (
-                        <Wallet
-                          {...{
-                            wallet,
-                            account,
-                            update,
-                            dispatch,
-                            handleClose: () => setProfile(false),
-                          }}
-                        />
-                      )}
-                    </div>
-                  </div>
-                )}
-              </div>
+              <Header />
               <div id="gallery">
                 <MarketPlace
                   {...{
@@ -101,35 +111,7 @@ const App = () => {
         render={() => {
           return (
             <div>
-              <div id="menu">
-                <div>
-                  <img
-                    style={{ opacity: signedIn ? 1 : 0.25 }}
-                    src={Avatar}
-                    onClick={() => setProfile(!profile)}
-                  />
-                </div>
-                <div>
-                  {!signedIn ? <Wallet {...{ wallet }} /> : account.accountId}
-                </div>
-                {profile && signedIn && (
-                  <div id="profile">
-                    <div>
-                      {wallet && wallet.signedIn && (
-                        <Wallet
-                          {...{
-                            wallet,
-                            account,
-                            update,
-                            dispatch,
-                            handleClose: () => setProfile(false),
-                          }}
-                        />
-                      )}
-                    </div>
-                  </div>
-                )}
-              </div>
+              <Header />
               <div id="gallery">
                 <Publisher
                   {...{
@@ -153,36 +135,7 @@ const App = () => {
         render={() => {
           return (
             <div>
-              {" "}
-              <div id="menu">
-                <div>
-                  <img
-                    style={{ opacity: signedIn ? 1 : 0.25 }}
-                    src={Avatar}
-                    onClick={() => setProfile(!profile)}
-                  />
-                </div>
-                <div>
-                  {!signedIn ? <Wallet {...{ wallet }} /> : account.accountId}
-                </div>
-                {profile && signedIn && (
-                  <div id="profile">
-                    <div>
-                      {wallet && wallet.signedIn && (
-                        <Wallet
-                          {...{
-                            wallet,
-                            account,
-                            update,
-                            dispatch,
-                            handleClose: () => setProfile(false),
-                          }}
-                        />
-                      )}
-                    </div>
-                  </div>
-                )}
-              </div>
+              <Header />
               <div id="contract">
                 {signedIn && (
                   <Contract {...{ near, update, wallet, account }} />

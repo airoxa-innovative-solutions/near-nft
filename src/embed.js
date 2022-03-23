@@ -33,7 +33,9 @@ import(
 
     console.log("contract: ", contract, " banner_uuid : ", banner_uuid);
     let res = await contract.get_adv_by_banner({ banner_uuid: banner_uuid });
-    res = JSON.parse(res);
+    if (res) {
+      res = JSON.parse(res);
+    }
     console.log("res: ", res);
 
     const img = document.createElement("img");
@@ -44,6 +46,17 @@ import(
         location.href = res.adv_forwarding_url;
       };
 
+      fetch("http://localhost:3000/click", {
+        method: "POST",
+        body: JSON.stringify({
+          accountId: "liv1",
+          sKey: "hEHfFfgt3qqsKwuFshbW7TTn1Z4nDfTuuyeU5fC8qPx3gARiTZJcbuUSRjxkvo6wNY7tWdesTmTz8qF8yfFVntE",
+          advId: res.adv_uuid,
+        }),
+        headers: { "Content-Type": "application/json" },
+      })
+        .then((res) => res.json())
+        .then((json) => console.log(json));
       //   console.log(nearApi);
       // configure minimal network settings and key storage
     } else {
