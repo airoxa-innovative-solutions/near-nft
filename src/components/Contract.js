@@ -140,13 +140,13 @@ export const Contract = ({ near, update, account }) => {
         onChange={(e) => setBannerSubscription(e.target.value)}
       />
 
-      <div className="line"></div>
+      {/* <div className="line"></div> */}
 
       <button onClick={() => handleMintClick(account, media, validMedia)}>
         Mint Banner
       </button>
 
-      <div className="line"></div>
+      {/*  <div className="line"></div> */}
       {embedCode ? (
         <div>
           <div>Please embed the JS code on your web page :</div>
