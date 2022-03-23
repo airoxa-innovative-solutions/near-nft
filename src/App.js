@@ -10,8 +10,9 @@ import { MarketPlace } from "./components/MarketPlace";
 import { Publisher } from "./components/Publisher";
 import { Home } from "./components/Home";
 
-import Avatar from "url:./img/avatar.jpg";
+import Avatar from "url:./img/user.png";
 import NearLogo from "url:./img/near_icon.svg";
+import LocifyLogo from "url:./img/locify.png";
 
 import "./App.scss";
 
@@ -44,14 +45,23 @@ const App = () => {
   const Header = () => {
     return (
       <div id="menu">
-        {/*   <div>
+        <div>
           <img
-            style={{ opacity: signedIn ? 1 : 0.25 }}
-            src={Avatar}
-            onClick={() => setProfile(!profile)}
+            style={{ width: 150 }}
+            src={LocifyLogo}
+            onClick={() => (window.location.href = window.location.origin)}
           />
-        </div> */}
-        <div>{!signedIn ? <Wallet {...{ wallet }} /> : account.accountId}</div>
+        </div>
+        <div class="avtarContainer">
+          {signedIn && (
+            <img
+              style={{ opacity: signedIn ? 1 : 0.25 }}
+              src={Avatar}
+              onClick={() => setProfile(!profile)}
+            />
+          )}
+          {!signedIn ? <Wallet {...{ wallet }} /> : account.accountId}
+        </div>
         {profile && signedIn && (
           <>
             <div id="profile">
@@ -69,11 +79,6 @@ const App = () => {
                 )}
               </div>
             </div>
-            <img
-              style={{ opacity: signedIn ? 1 : 0.25 }}
-              src={Avatar}
-              onClick={() => setProfile(!profile)}
-            />
           </>
         )}
       </div>

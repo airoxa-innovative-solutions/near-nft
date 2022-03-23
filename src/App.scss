@@ -407,6 +407,12 @@ input {
   margin-top: 150px;
 }
 
+.avtarContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
 /* CSS */
 .button-19 {
   appearance: button;
